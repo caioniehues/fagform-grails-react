@@ -1,4 +1,4 @@
-package myapp
+package fagform
 
 class Pessoa {
 

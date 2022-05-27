@@ -1,6 +1,6 @@
-package myapp
+package fagform
 
-class Curso {
+class Historico {
 
     static constraints = {
     }

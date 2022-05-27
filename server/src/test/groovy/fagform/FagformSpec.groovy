@@ -1,9 +1,9 @@
-package myapp
+package fagform
 
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class InteracaoSpec extends Specification implements DomainUnitTest<Interacao> {
+class FagformSpec extends Specification implements DomainUnitTest<Fagform> {
 
     def setup() {
     }
