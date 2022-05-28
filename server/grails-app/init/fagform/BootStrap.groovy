@@ -5,7 +5,7 @@ import grails.gorm.transactions.Transactional
 class BootStrap {
 
     def init = { servletContext ->
-        addTestUser()
+//        addTestUser()
     }
     def destroy = {
     }
@@ -14,7 +14,9 @@ class BootStrap {
     void addTestUser() {
         def adminRole = new Role(authority: 'ROLE_ADMIN').save()
 
-        def testUser = new User(username: 'caio@caio.com', password: 'senha').save()
+        def testUser = new Usuario(username: 'caio@admin.com', password: 'senha', nomeCompleto: 'Caio Cesar Niehues').save()
+
+        testUser.save()
 
         UserRole.create testUser, adminRole
 
@@ -23,7 +25,7 @@ class BootStrap {
             it.clear()
         }
 
-        assert User.count() == 1
+        assert Usuario.count() == 1
         assert Role.count() == 1
         assert UserRole.count() == 1
     }

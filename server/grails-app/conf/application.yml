@@ -99,12 +99,12 @@ dataSource:
 environments:
     development:
         dataSource:
-            driverClassName: org.h2.Driver
-            username: sa
-            password: ''
-            dialect: org.hibernate.dialect.H2Dialect
+            driverClassName: org.postgresql.Driver
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            username: root
+            password: root
             dbCreate: update
-            url: jdbc:h2:mem:devDb
+            url: jdbc:postgresql://localhost:5432/test_db
     test:
         dataSource:
             dbCreate: update
@@ -147,7 +147,7 @@ grails:
     plugin:
         springsecurity:
             userLookup:
-                userDomainClassName: fagform.User
+                userDomainClassName: fagform.Usuario
                 authorityJoinClassName: fagform.UserRole
             authority:
                 className: fagform.Role
@@ -170,7 +170,7 @@ grails:
                         filters: JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter
                     - # Traditional Chain
                         pattern: /**
-                        filters: JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter
+                        filters: JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter
                 controllerAnnotations:
                     staticRules:
                         -

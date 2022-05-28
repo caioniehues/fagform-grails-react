@@ -7,10 +7,11 @@ import grails.compiler.GrailsCompileStatic
 @GrailsCompileStatic
 @EqualsAndHashCode(includes='username')
 @ToString(includes='username', includeNames=true, includePackage=false)
-class User implements Serializable {
+class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1
 
+    String nomeCompleto
     String username
     String password
     boolean enabled = true
@@ -23,6 +24,7 @@ class User implements Serializable {
     }
 
     static constraints = {
+        nomeCompleto nullable: true
         password blank: false, password: true
         username blank: false, unique: true
     }

@@ -7,7 +7,7 @@ import qs from 'qs';
 
 export default {
   logIn(auth) { 
-    localStorage.auth = JSON.stringify(auth);
+    localStorage.setItem = JSON.stringify(auth);
   },
 
   logOut() { 

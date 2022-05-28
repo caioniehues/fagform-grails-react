@@ -11,4 +11,12 @@ class DashboardController {
     def index() {
         render "batata"
     }
+    @Secured(['ROLE_ADMIN'])
+    def teste(){
+        render([text : 'fodjoiapjfasjf'])
+    }
+    @Secured('ROLE_ADMIN')
+    def batata(){
+        render 'teste de endpont'
+    }
 }

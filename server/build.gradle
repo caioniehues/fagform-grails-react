@@ -62,6 +62,7 @@ dependencies {
     profile "org.grails.profiles:react"
     runtimeOnly "org.glassfish.web:el-impl:2.2.1-b05"
     runtimeOnly "com.h2database:h2"
+    runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
     runtimeOnly "javax.xml.bind:jaxb-api:2.3.1"

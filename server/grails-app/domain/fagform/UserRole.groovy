@@ -12,7 +12,7 @@ class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1
 
-    User user
+    Usuario user
     Role role
 
     @Override
@@ -44,24 +44,24 @@ class UserRole implements Serializable {
 
     private static DetachedCriteria criteriaFor(long userId, long roleId) {
         UserRole.where {
-            user == User.load(userId) &&
+            user == Usuario.load(userId) &&
                     role == Role.load(roleId)
         }
     }
 
-    static UserRole create(User user, Role role, boolean flush = false) {
+    static UserRole create(Usuario user, Role role, boolean flush = false) {
         def instance = new UserRole(user: user, role: role)
         instance.save(flush: flush)
         instance
     }
 
-    static boolean remove(User u, Role r) {
+    static boolean remove(Usuario u, Role r) {
         if (u != null && r != null) {
             UserRole.where { user == u && role == r }.deleteAll()
         }
     }
 
-    static int removeAll(User u) {
+    static int removeAll(Usuario u) {
         u == null ? 0 : UserRole.where { user == u }.deleteAll() as int
     }
 
