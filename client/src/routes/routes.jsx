@@ -7,6 +7,7 @@ import { ForgotPassword } from "../screens/ForgotPassword";
 import { UserRegistration } from "../screens/UserRegistration/UserRegistration";
 import { CourseRegistration } from "../screens/CourseRegistration/CourseRegistration";
 import { DepartmentRegistration } from "../screens/DepartmentRegistration/DepartmentRegistration";
+import { UserHistory } from "../screens/UserHistory";
 import { Status } from "../screens/Status";
 import { Dashboard } from "../screens/Dashboard";
 
@@ -18,6 +19,7 @@ export const RoutesApp = () => {
         <Route element={<ForgotPassword />} path="/forgotPassword" />
         <Route element={<UserRegistration />} path="/userRegister" />
         <Route element={<CourseRegistration />} path="/courseRegister" />
+        <Route element={<UserHistory />} path="/userHistory" />
         <Route
           element={<DepartmentRegistration />}
           path="/departmentRegister"

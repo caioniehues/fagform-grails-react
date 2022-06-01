@@ -25,16 +25,13 @@ export const loginUserService = (request) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Accept": "application/json"
     },
-    body: JSON.stringify(request.user.values),
+    body: JSON.stringify(request.user),
   };
 
-  return fetch('http://localhost:8080/api/login', parameters)
-    .then(response => response.json())
-    .then(data => {
-      localStorage.setItem("bearer_token", data.access_token)
-      localStorage.setItem("refresh_token", data.refresh_token)
+  return fetch('http://35.215.218.99:8080/login', parameters)
+    .then((response) => {
+      return response.json();
     })
     .then((json) => {
       return json;

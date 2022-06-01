@@ -8,15 +8,17 @@ class DashboardController {
 	static responseFormats = ['json']
 
     @Secured(['ROLE_ADMIN'])
-    def index() {
+    def index() { // vai retornar todos TODO service para retornar JSON de teste
+
         render "batata"
     }
-    @Secured(['ROLE_ADMIN'])
-    def teste(){
-        render([text : 'fodjoiapjfasjf'])
-    }
+
     @Secured('ROLE_ADMIN')
     def batata(){
         render 'teste de endpont'
+    }
+
+    def mostrarTodos(){
+        
     }
 }

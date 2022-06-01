@@ -4,7 +4,7 @@ class Pessoa {
 
     String nomeCompleto
 
-    Historico historico
+    static hasOne = [historico : Historico]
 
     String email
 
@@ -20,7 +20,7 @@ class Pessoa {
         nomeCompleto(nullable: false)
         telefone(nullable: false)
         curso(nullable: false)
-        estado(nullable: false)
+        historico unique: true
         cidade(nullable: false)
     }
 }

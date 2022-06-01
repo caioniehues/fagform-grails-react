@@ -2,7 +2,38 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 body {
   width: 100%;
+  background: #f5f5f5;
+}
+
+.expandable-row {
+  position: relative;
+  margin-top: -20px;
+}
+.expandable-row::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: calc(100% + 0.25rem);
+  max-width: 71rem;
+  height: 22px;
+  margin: 6px 0 0 -4px;
+  background: #fff;
+  z-index: 100;
+}
+.expandable-row::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  display: block;
+  width: calc(100% + 0.25rem);
+  max-width: 71rem;
+  height: 8px;
+  margin: 12px 0 0 -4px;
+  background: #fff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  z-index: 50;
 }
