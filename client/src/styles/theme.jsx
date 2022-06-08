@@ -59,7 +59,7 @@ export const theme = createTheme({
         flex: 5,
         border: "none !important",
         position: "relative",
-        zIndex: 2000,
+        zIndex: 1000,
       },
       paddingCheckbox: {
         flex: 1,
@@ -67,6 +67,16 @@ export const theme = createTheme({
       head: {
         fontWeight: "bold",
         fontSize: "1rem",
+      },
+    },
+    MuiDialog: {
+      paper: {
+        background: "#f5f5f5",
+      },
+    },
+    MuiDialogContent: {
+      root: {
+        padding: 0,
       },
     },
   },

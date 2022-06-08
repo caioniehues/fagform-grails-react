@@ -18,7 +18,7 @@ body {
   position: absolute;
   display: block;
   width: calc(100% + 0.25rem);
-  max-width: 71rem;
+ 
   height: 22px;
   margin: 6px 0 0 -4px;
   background: #fff;
@@ -30,7 +30,7 @@ body {
   top: 0;
   display: block;
   width: calc(100% + 0.25rem);
-  max-width: 71rem;
+
   height: 8px;
   margin: 12px 0 0 -4px;
   background: #fff;

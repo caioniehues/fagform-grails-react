@@ -30,7 +30,7 @@ const Select = ({ name, label, fullWidth = true, children, ...props }) => {
               left: 10,
               background: "#fff",
               display: "block",
-              zIndex: 1,
+              zIndex: 1300,
               padding: "0 0.5rem",
             }}
           >

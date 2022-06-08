@@ -13,3 +13,10 @@ export const loginUserAction = (user) => {
     user,
   };
 };
+
+export const changePasswordUserAction = (user) => {
+  return {
+    type: types.CHANGE_PASSWORD_USER,
+    user,
+  };
+};

@@ -8,7 +8,6 @@ import {
   Typography,
   MenuItem,
   FormControl,
-  Box,
   Select,
   InputLabel,
 } from "@material-ui/core";
@@ -36,10 +35,9 @@ const schema = yup.object({
   observacao: yup.string(),
 });
 
-export function Status({ open, onClose }) {
+function Status({ open, onClose }) {
   const { dialogActions, dialogTitle } = useStyles();
   {
-    const [open, setOpen] = useState(false);
     const [status, setStatus] = useState("");
     const [observacao, setObservacao] = useState("");
     const fullWidth = useState(true);
@@ -51,88 +49,70 @@ export function Status({ open, onClose }) {
       },
     });
 
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-
-    const handleCancel = () => {
-      setOpen(false);
-      console.log(`CANCELAR\nStatus: ${status}\nObservação:${observacao}`);
-    };
-
-    const handleSave = () => {
-      setOpen(false);
-      console.log(`SALVAR\nStatus: ${status}\nObservação:${observacao}`);
-    };
-
     return (
       <Fragment>
-        <Box className="content-button">
-          <Button onClick={handleClickOpen}>Alterar status do processo</Button>
-        </Box>
-
-        <Dialog fullWidth={fullWidth} open={open} onClose={handleCancel}>
+        <Dialog fullWidth={fullWidth} open={open} onClose={onClose}>
           <DialogTitle>
             <Typography variant="h5" className={dialogTitle}>
               Alterar status do processo
             </Typography>
           </DialogTitle>
 
-          <DialogContent>
-            <Box className="container-input" style={{ marginTop: "0.5rem" }}>
-              <Box className="container-input">
-                <FormControl variant="outlined" className="container-input">
-                  <InputLabel>Status</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    label="Status"
-                    placeholder="Selecione"
-                  >
-                    <MenuItem value="">
-                      <em>Selecione</em>
-                    </MenuItem>
+          <DialogContent style={{ padding: "0 1.5rem" }}>
+            <FormControl
+              variant="outlined"
+              style={{ display: "flex", marginTop: "0.5rem" }}
+            >
+              <InputLabel>Status</InputLabel>
+              <Select
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                label="Status"
+                placeholder="Selecione"
+                fullWidth
+              >
+                <MenuItem value="">
+                  <em>Selecione</em>
+                </MenuItem>
 
-                    <MenuItem value="Selecione2">
-                      <em>Selecione2</em>
-                    </MenuItem>
+                <MenuItem value="Selecione2">
+                  <em>Selecione2</em>
+                </MenuItem>
 
-                    <MenuItem value="Selecione3">
-                      <em>Selecione3</em>
-                    </MenuItem>
+                <MenuItem value="Selecione3">
+                  <em>Selecione3</em>
+                </MenuItem>
 
-                    <MenuItem value="Selecione4">
-                      <em>Selecione4</em>
-                    </MenuItem>
+                <MenuItem value="Selecione4">
+                  <em>Selecione4</em>
+                </MenuItem>
 
-                    <MenuItem value="Selecione5">
-                      <em>Selecione5</em>
-                    </MenuItem>
-                  </Select>
-                  <FormProvider {...methods}>
-                    <TextField
-                      multiline
-                      onChange={(e) => setObservacao(e.target.value)}
-                      rows={4}
-                      classname="container-input"
-                      name="observacao"
-                      label="Observação"
-                      value={observacao}
-                    />
-                  </FormProvider>
-                </FormControl>
-              </Box>
-            </Box>
+                <MenuItem value="Selecione5">
+                  <em>Selecione5</em>
+                </MenuItem>
+              </Select>
+              <FormProvider {...methods}>
+                <TextField
+                  multiline
+                  onChange={(e) => setObservacao(e.target.value)}
+                  rows={4}
+                  name="observacao"
+                  fullWidth
+                  label="Observação"
+                  value={observacao}
+                />
+              </FormProvider>
+            </FormControl>
           </DialogContent>
 
           <DialogActions className={dialogActions}>
-            <Button size="medium" color="secondary" onClick={handleCancel}>
+            <Button size="medium" color="secondary" onClick={onClose}>
               CANCELAR
             </Button>
 
-            <Button size="medium" color="primary" onClick={handleSave}>
+            <Button size="medium" color="primary" onClick={onClose}>
               SALVAR
             </Button>
           </DialogActions>
@@ -141,3 +121,4 @@ export function Status({ open, onClose }) {
     );
   }
 }
+export default Status;

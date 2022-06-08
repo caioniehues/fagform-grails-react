@@ -1,28 +1,24 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import ListItemText from "@material-ui/core/ListItemText";
-import Select from "@material-ui/core/Select";
 import Checkbox from "@material-ui/core/Checkbox";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Search from "@material-ui/icons/Search";
 import Button from "../Button";
-import { Box } from "@material-ui/core";
-import Badge from "@material-ui/core/Badge";
-import MailIcon from "@material-ui/icons/Mail";
-import Typography from "@material-ui/core/Typography";
+import Select from "../../components/Select/Select";
+
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -30,35 +26,32 @@ import TextField from "../TextField";
 
 const useStyles = makeStyles((theme) => ({
   status: {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%",
-    margin: "1rem 0",
     fontSize: "12px",
-    "& div + div": {
-      marginLeft: "1rem",
-    },
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    display: "flex",
+    textAlign: "justify",
+    flexDirection: "row",
+    width: "100%",
   },
   item: {
+    fontSize: "small",
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
+    flexDirection: "row",
+    padding: "10px",
   },
   margin: {
     width: "100%",
     marginTop: "10px",
   },
   formControl: {
-    width: "20%",
+    width: "100%",
     marginTop: "10px",
   },
   container: {
-    width: "20%",
+    width: "100%",
     marginTop: "-5.8px",
-  },
-  buttons: {
-    width: "20%",
-    paddingLeft: 10,
   },
   chips: {
     display: "flex",
@@ -72,46 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const names = [
-  "Administração",
-  "Agronomia",
-  "Aquitetura e Urbanismo",
-  "Ciências Biológicas",
-  "Ciências Contábeis",
-  "Design Gráfico",
-  "Direito",
-  "Educação Física",
-  "Enfermagem",
-  "Engenharia Civil",
-];
-
-const status = [
-  "Todos",
-  "Em espera",
-  "Em atendimento",
-  "Aguardando inscrição",
-  "Realizou inscrição",
-  "Aguardando pagamento",
-  "Efetuou pagamento",
-  "Realizou a matrícula",
-  "Não matriculado",
-];
-
-const schema = yup.object({
-  username: yup.string().required("E-mail é obrigatório"),
-  password: yup.string().required("Senha é obrigatória"),
-});
+const schema = yup.object({});
 
 const DashboardFilters = () => {
   const classes = useStyles();
@@ -128,17 +82,10 @@ const DashboardFilters = () => {
 
   const methods = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
+    defaultValues: {},
   });
 
-  const { clearErrors, handleSubmit, control, formState } = methods;
-
-  const { errors } = formState;
-
-  const clearError = useCallback(() => clearErrors("password"), [clearErrors]);
+  const { handleSubmit } = methods;
 
   const dispatch = useDispatch();
 
@@ -149,140 +96,138 @@ const DashboardFilters = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          {
-            //CAMPO DE BUSCA
-            <FormControl className={classes.margin}>
-              <Input
-                style={{ margin: 0 }}
-                id="search"
-                placeholder="Buscar"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          }
-        </div>
-        <div>
-          {
-            //SELEÇÃO DE CURSO
-            <FormControl className={classes.formControl}>
-              <InputLabel variant="outline" label="Cursos" id="courses-label">
-                Cursos
-              </InputLabel>
-              <Select
-                labelId="courses-label"
-                id="courses-combo-box"
-                multiple
-                value={courseName}
-                onChange={handleChange}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {names.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    <Checkbox checked={courseName.indexOf(name) > -1} />
-                    <ListItemText primary={name} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          }
-          {
-            //SELECIONAR STATUS
-            <FormControl className={classes.formControl}>
-              <InputLabel id="status-label" className={classes.font}>
-                Status
-              </InputLabel>
-              <Select
-                labelId="status-label"
-                id="status-combo-box"
-                multiple
-                value={statusName}
-                onChange={statusChange}
-                input={<Input />}
-                renderValue={(selected) => selected.join(", ")}
-                MenuProps={MenuProps}
-              >
-                {status.map((statu) => (
-                  <MenuItem key={statu} value={statu}>
-                    <Checkbox checked={statusName.indexOf(statu) > -1} />
-                    <ListItemText primary={statu} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          }
-          <FormControl className={classes.container}>
-            <TextField
-              name="data_inicial"
-              label="Data inicial"
-              type="date"
-              variant="standard"
-              InputLabelProps={{ shrink: true }}
-            />
-          </FormControl>
-          <FormControl className={classes.container}>
-            <TextField
-              name="data_final"
-              label="Data Final"
-              type="date"
-              variant="standard"
-              InputLabelProps={{ shrink: true }}
-            />
-          </FormControl>
-          {
-            //BOTÕES
-            <FormControl className={classes.buttons}>
-              <Box className="content-button">
-                <Button color="gray" size="small">
-                  LIMPAR
-                </Button>
-                <Button size="small">BUSCAR</Button>
-              </Box>
-            </FormControl>
-          }
-        </div>
-        {
-          //STATUS
-          <div className={classes.status}>
-            <FormControl className={classes.item}>
-              <BookmarkIcon fontSize="small" sx={{ color: "red" }} />
-              <p>Em espera</p>
-            </FormControl>
-            <FormControl className={classes.item}>
-              <BookmarkIcon fontSize="small" sx={{ color: "orange" }} />
-              <p>Em atendimento</p>
-            </FormControl>
-            <FormControl className={classes.item}>
-              <BookmarkIcon fontSize="small" sx={{ color: "skyblue" }} />
-              <p>Aguardando inscrição</p>
-            </FormControl>
-            <FormControl className={classes.item}>
-              <BookmarkIcon fontSize="small" sx={{ color: "blue" }} />
-              <p>Realizou inscrição</p>
-            </FormControl>
-            <FormControl className={classes.item}>
-              <BookmarkIcon fontSize="small" sx={{ color: "midnightblue" }} />
-              <p>Aguardando pagamento</p>
-            </FormControl>
-            <FormControl className={classes.item}>
-              <BookmarkIcon fontSize="small" sx={{ color: "green" }} />
-              <p>Efetuou pagamento</p>
-            </FormControl>
-            <FormControl className={classes.item}>
-              <BookmarkIcon fontSize="small" sx={{ color: "darkgreen" }} />
-              <p>Realizou matrícula</p>
-            </FormControl>
-            <FormControl className={classes.item}>
-              <BookmarkIcon fontSize="small" sx={{ color: "yellow" }} />
-              <p>Não matriculado</p>
-            </FormControl>
-          </div>
-        }
+        <Card>
+          <CardContent>
+            <Grid style={{ marginBottom: "1rem" }}>
+              <FormControl className={classes.margin}>
+                <Input
+                  style={{ margin: 0 }}
+                  id="search"
+                  placeholder="Buscar"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Search />
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
+            <Grid container spacing={1} style={{ marginBottom: "1rem" }}>
+              <Grid item xs={9}>
+                <Grid container spacing={1}>
+                  <Grid item xs={3}>
+                    <Select name="campo4" label="Cursos">
+                      <MenuItem value="valor_1">Administração</MenuItem>
+                      <MenuItem value="valor_2">Agronomia</MenuItem>
+                      <MenuItem value="valor_3">
+                        Arquitetura e Urbanismo
+                      </MenuItem>
+                      <MenuItem value="valor_4">Ciências Biológicas</MenuItem>
+                      <MenuItem value="valor_5">Ciências Contábeis</MenuItem>
+                      <MenuItem value="valor_6">Design Gráfico</MenuItem>
+                      <MenuItem value="valor_7">Direito</MenuItem>
+                      <MenuItem value="valor_8">Educação Física</MenuItem>
+                      <MenuItem value="valor_9">Enfermagem</MenuItem>
+                      <MenuItem value="valor_10">Enfermagem</MenuItem>
+                      <MenuItem value="valor_11">Engenharia Civil</MenuItem>
+                    </Select>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Select name="campo4" label="Status">
+                      <MenuItem value="valor1">Todos</MenuItem>
+                      <MenuItem value="valor2">Em espera</MenuItem>
+                      <MenuItem value="valor3">Em atendimento</MenuItem>
+                      <MenuItem value="valor4">Aguardando inscrição</MenuItem>
+                      <MenuItem value="valor5">Realizou inscrição</MenuItem>
+                      <MenuItem value="valor6">Aguardando pagamento</MenuItem>
+                      <MenuItem value="valor7">Efetuou pagamento</MenuItem>
+                      <MenuItem value="valor8">Realizou a matrícula</MenuItem>
+                      <MenuItem value="valor9">Não matriculado</MenuItem>
+                    </Select>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <FormControl className={classes.container}>
+                      <TextField
+                        name="data_inicial"
+                        label="Data inicial"
+                        type="date"
+                        variant="outlined"
+                        InputLabelProps={{ shrink: true }}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <FormControl className={classes.container}>
+                      <TextField
+                        name="data_final"
+                        label="Data Final"
+                        type="date"
+                        variant="outlined"
+                        InputLabelProps={{ shrink: true }}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={3}>
+                <FormControl>
+                  <Grid container spacing={1}>
+                    <Grid item xs={6}>
+                      <Button
+                        color="gray"
+                        size="large"
+                        style={{ marginRight: "50px" }}
+                      >
+                        LIMPAR
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button size="large" style={{ marginLeft: "50px" }}>
+                        BUSCAR
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <div className={classes.status}>
+              <FormControl className={classes.item}>
+                <BookmarkIcon fontSize="small" sx={{ color: "red" }} />
+                <p>Em espera</p>
+              </FormControl>
+              <FormControl className={classes.item}>
+                <BookmarkIcon fontSize="small" sx={{ color: "orange" }} />
+                <p>Em atendimento</p>
+              </FormControl>
+              <FormControl className={classes.item}>
+                <BookmarkIcon fontSize="small" sx={{ color: "skyblue" }} />
+                <p>Aguardando inscrição</p>
+              </FormControl>
+              <FormControl className={classes.item}>
+                <BookmarkIcon fontSize="small" sx={{ color: "blue" }} />
+                <p>Realizou inscrição</p>
+              </FormControl>
+              <FormControl className={classes.item}>
+                <BookmarkIcon fontSize="small" sx={{ color: "midnightblue" }} />
+                <p>Aguardando pagamento</p>
+              </FormControl>
+              <FormControl className={classes.item}>
+                <BookmarkIcon fontSize="small" sx={{ color: "green" }} />
+                <p>Efetuou pagamento</p>
+              </FormControl>
+              <FormControl className={classes.item}>
+                <BookmarkIcon fontSize="small" sx={{ color: "darkgreen" }} />
+                <p>Realizou matrícula</p>
+              </FormControl>
+              <FormControl className={classes.item}>
+                <BookmarkIcon fontSize="small" sx={{ color: "yellow" }} />
+                <p>Não matriculado</p>
+              </FormControl>
+            </div>
+          </CardContent>
+        </Card>
       </form>
     </FormProvider>
   );

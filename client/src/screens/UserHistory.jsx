@@ -9,17 +9,20 @@ import TableRow from "@material-ui/core/TableRow";
 import {
   Dialog,
   DialogActions,
+  DialogContent,
   DialogTitle,
   makeStyles,
   Typography,
 } from "@material-ui/core";
 import Button from "../components/Button/Button";
-import { useState } from "react";
 
 const useStyles = makeStyles(() => {
   return {
     dialogTitle: {
-      fontWeight: "bold",
+      paddingBottom: "0 !important",
+      "& h5": {
+        fontWeight: "bold",
+      },
     },
     dialogActions: {
       padding: "0.5rem 1.5rem 1.5rem 1.5rem",
@@ -27,23 +30,18 @@ const useStyles = makeStyles(() => {
   };
 });
 
-export function UserHistory() {
-  const [modalIsOpen, setIsOpen] = useState(false);
-
+function UserHistory({ open, onClose }) {
   const { dialogActions, dialogTitle } = useStyles();
-
-  function handleOpenModal() {
-    setIsOpen(true);
-  }
-
-  function handleCloseModal() {
-    setIsOpen(false);
-  }
 
   const columns = [
     { id: "status", label: "Status", minWidth: 170 },
     { id: "data", label: "Data", minWidth: 100 },
-    { id: "observacoes", label: "Observações", minWidth: 170 },
+    {
+      id: "observacoes",
+      label: "Observações",
+      minWidth: 170,
+      style: { flex: 15 },
+    },
     { id: "usuario", label: "Usuário", minWidth: 170 },
   ];
 
@@ -83,74 +81,75 @@ export function UserHistory() {
 
   return (
     <fragment className="container">
-      <Button onClick={handleOpenModal}>Abrir</Button>
-      <Dialog
-        open={modalIsOpen}
-        onClose={handleCloseModal}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>
-          <Typography variant="h5" className={dialogTitle}>
-            Histórico
-          </Typography>
+      <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+        <DialogTitle className={dialogTitle}>
+          <Typography variant="h5">Histórico</Typography>
         </DialogTitle>
-        <TableContainer sx={{ maxHeight: 20 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{
-                      top: 57,
-                      minWidth: column.minWidth,
-                    }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
+        <DialogContent>
+          <TableContainer style={{ minWidth: "50rem" }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={column.style}
                     >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          labelRowsPerPage={""}
-          rowsPerPageOptions={[]}
-        />
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.code}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              style={column.style}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          <TablePagination
+            style={{ marginRight: "1rem" }}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            labelRowsPerPage="Linhas por página:"
+            labelDisplayedRows={({ from, to, count }) =>
+              `${from}-${to} linhas de ${count}`
+            }
+            rowsPerPageOptions={[5, 10, 25]}
+          />
+        </DialogContent>
+
         <DialogActions className={dialogActions}>
-          <Button size="medium" color="secondary" onClick={handleCloseModal}>
+          <Button size="medium" color="secondary" onClick={onClose}>
             Fechar
           </Button>
         </DialogActions>
@@ -158,3 +157,4 @@ export function UserHistory() {
     </fragment>
   );
 }
+export default UserHistory;
