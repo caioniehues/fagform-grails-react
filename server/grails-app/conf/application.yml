@@ -99,20 +99,21 @@ dataSource:
 environments:
     development:
         dataSource:
+            driverClassName: org.h2.Driver
+            username: sa
+            password: ''
+            dialect: org.hibernate.dialect.H2Dialect
+            dbCreate: update
+            url: jdbc:h2:mem:devDb
+
+    test:
+        dataSource:
             driverClassName: org.postgresql.Driver
             dialect: org.hibernate.dialect.PostgreSQLDialect
             username: root
             password: root
             dbCreate: update
             url: jdbc:postgresql://localhost:5432/test_db
-    test:
-        dataSource:
-            dbCreate: update
-            driverClassName: com.mysql.cj.jdbc.Driver
-            username: root
-            password: z@1x7cBoYPT*AO@y3j
-            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-            url: jdbc:mysql://mysql/test_db?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
 
     production:
         dataSource:
