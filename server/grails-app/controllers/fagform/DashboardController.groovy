@@ -3,6 +3,7 @@ package fagform
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.*
 import grails.converters.*
+import org.grails.web.json.JSONArray
 
 class DashboardController {
 	static responseFormats = ['json']
@@ -15,7 +16,13 @@ class DashboardController {
 
     @Secured('ROLE_ADMIN')
     def batata(){
-        render 'teste de endpont'
+
+        def mapaDeRetorno = [
+                chave : 'valor',
+                mapa : 'é um mapa!!'
+        ]
+
+        respond (mapaDeRetorno)
     }
 
     def mostrarTodos(){

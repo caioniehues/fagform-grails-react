@@ -25,9 +25,8 @@ export const loginUserService = (request) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Accept": "application/json"
     },
-    body: JSON.stringify(request.user.values),
+    body: JSON.stringify(request.user),
   };
 
   return fetch('http://localhost:8080/api/login', parameters)

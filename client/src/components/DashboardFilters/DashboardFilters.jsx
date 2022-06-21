@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     textAlign: "justify",
     flexDirection: "row",
-    width: "100%",
+    justifyContent: "space-between",
   },
   item: {
-    fontSize: "small",
+    fontSize: "0.875rem",
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
@@ -194,35 +194,35 @@ const DashboardFilters = () => {
 
             <div className={classes.status}>
               <FormControl className={classes.item}>
-                <BookmarkIcon fontSize="small" sx={{ color: "red" }} />
+                <BookmarkIcon sx={{ color: "red" }} />
                 <p>Em espera</p>
               </FormControl>
               <FormControl className={classes.item}>
-                <BookmarkIcon fontSize="small" sx={{ color: "orange" }} />
+                <BookmarkIcon sx={{ color: "orange" }} />
                 <p>Em atendimento</p>
               </FormControl>
               <FormControl className={classes.item}>
-                <BookmarkIcon fontSize="small" sx={{ color: "skyblue" }} />
+                <BookmarkIcon sx={{ color: "skyblue" }} />
                 <p>Aguardando inscrição</p>
               </FormControl>
               <FormControl className={classes.item}>
-                <BookmarkIcon fontSize="small" sx={{ color: "blue" }} />
+                <BookmarkIcon sx={{ color: "blue" }} />
                 <p>Realizou inscrição</p>
               </FormControl>
               <FormControl className={classes.item}>
-                <BookmarkIcon fontSize="small" sx={{ color: "midnightblue" }} />
+                <BookmarkIcon sx={{ color: "midnightblue" }} />
                 <p>Aguardando pagamento</p>
               </FormControl>
               <FormControl className={classes.item}>
-                <BookmarkIcon fontSize="small" sx={{ color: "green" }} />
+                <BookmarkIcon sx={{ color: "green" }} />
                 <p>Efetuou pagamento</p>
               </FormControl>
               <FormControl className={classes.item}>
-                <BookmarkIcon fontSize="small" sx={{ color: "darkgreen" }} />
+                <BookmarkIcon sx={{ color: "darkgreen" }} />
                 <p>Realizou matrícula</p>
               </FormControl>
               <FormControl className={classes.item}>
-                <BookmarkIcon fontSize="small" sx={{ color: "yellow" }} />
+                <BookmarkIcon sx={{ color: "yellow" }} />
                 <p>Não matriculado</p>
               </FormControl>
             </div>

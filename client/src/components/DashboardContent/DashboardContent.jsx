@@ -1,11 +1,17 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { makeStyles, TableSortLabel, TablePagination } from "@material-ui/core";
+import {
+  makeStyles,
+  TableSortLabel,
+  Box,
+  TablePagination,
+  Tooltip,
+} from "@material-ui/core";
 import exampleData from "./exampleData.json";
 import DashboardFilters from "../DashboardFilters";
 import { useDispatch } from "react-redux";
 
-import FlagIcon from "@material-ui/icons/Flag";
+import Bookmark from "@material-ui/icons/Bookmark";
 import MoreVert from "@material-ui/icons/MoreVert";
 import Restore from "@material-ui/icons/Restore";
 import AttatchFile from "@material-ui/icons/AttachFile";
@@ -20,6 +26,8 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { dashboardAction } from "../../store/actions/dashboardActions";
 import UserHistory from "../../screens/UserHistory";
 import Status from "../../screens/Status";
+import ModalQuickRegistration from "../../screens/QuickRegistration/ModalQuickRegistration";
+import Button from "../../components/Button/Button";
 
 const useStyles = makeStyles(() => {
   return {
@@ -75,6 +83,7 @@ function DashboardContent() {
   const [rowsPerPage, setRowsPerPage] = useState(10); // valor padrão
   const [modalIsOpenUserHistory, setIsOpenUserHistory] = useState(null);
   const [modalIsOpenStatus, setIsOpenStatus] = useState(null);
+  const [modalIsOpenRegistration, setIsOpenRegistration] = useState(null);
 
   const sorting = (col) => {
     if (order === "ASC") {
@@ -155,17 +164,23 @@ function DashboardContent() {
                     }
                   >
                     <TableCell style={{ flex: 4 }}>
-                      <IconButton style={{ padding: "0.25rem" }}>
-                        <FlagIcon onClick={() => setIsOpenStatus(d)} />
-                      </IconButton>
-                      <IconButton style={{ padding: "0.25rem" }}>
-                        <Restore onClick={() => setIsOpenUserHistory(d)} />
-                      </IconButton>
-                      <IconButton style={{ padding: "0.25rem" }}>
-                        <AttatchFile
-                          onClick={() => console.log("AttatchFile")}
-                        />
-                      </IconButton>
+                      <Tooltip title="Alterar status">
+                        <IconButton style={{ padding: "0.25rem" }}>
+                          <Bookmark onClick={() => setIsOpenStatus(d)} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Histórico">
+                        <IconButton style={{ padding: "0.25rem" }}>
+                          <Restore onClick={() => setIsOpenUserHistory(d)} />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Baixar anexo">
+                        <IconButton style={{ padding: "0.25rem" }}>
+                          <AttatchFile
+                            onClick={() => console.log("AttatchFile")}
+                          />
+                        </IconButton>
+                      </Tooltip>
                     </TableCell>
                     <TableCell component="th" scope="row" style={{ flex: 3 }}>
                       {d.data}
@@ -184,19 +199,30 @@ function DashboardContent() {
                 ))}
             </TableBody>
           </MaUTable>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={exampleData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-            labelRowsPerPage="Linhas por página:"
-            labelDisplayedRows={({ from, to, count }) =>
-              `${from}-${to} linhas de ${count}`
-            }
-          />
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <span style={{ display: "block" }} />
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={exampleData.length}
+              style={{ display: "block" }}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+              labelRowsPerPage="Linhas por página:"
+              labelDisplayedRows={({ from, to, count }) =>
+                `${from}-${to} linhas de ${count}`
+              }
+            />
+            <Button onClick={() => setIsOpenRegistration(true)}>
+              Cadastrar
+            </Button>
+          </Box>
         </div>
       </div>
       <UserHistory
@@ -204,6 +230,10 @@ function DashboardContent() {
         onClose={() => setIsOpenUserHistory(null)}
       />
       <Status open={modalIsOpenStatus} onClose={() => setIsOpenStatus(null)} />
+      <ModalQuickRegistration
+        open={modalIsOpenRegistration}
+        onClose={() => setIsOpenRegistration(null)}
+      />
     </Fragment>
   );
 }
