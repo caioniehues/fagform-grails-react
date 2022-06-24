@@ -7,7 +7,7 @@ import org.grails.web.json.JSONArray
 
 class DashboardController {
 	static responseFormats = ['json']
-
+    DashboardService dashboardService
     @Secured(['ROLE_ADMIN'])
     def index() { // vai retornar todos TODO service para retornar JSON de teste
 
@@ -26,6 +26,6 @@ class DashboardController {
     }
 
     def mostrarTodos(){
-        
+        dashboardService.obtemPessoas()
     }
 }

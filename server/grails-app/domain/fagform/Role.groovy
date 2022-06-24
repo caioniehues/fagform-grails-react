@@ -19,5 +19,6 @@ class Role implements Serializable {
 
     static mapping = {
         cache true
+        id generator: 'identity'
     }
 }

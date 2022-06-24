@@ -82,6 +82,8 @@ grails:
 
 ---
 grails:
+    grom:
+        failOnError: true
     cors:
         enabled: true
 ---
@@ -99,12 +101,12 @@ dataSource:
 environments:
     development:
         dataSource:
-            driverClassName: org.h2.Driver
-            username: sa
-            password: ''
-            dialect: org.hibernate.dialect.H2Dialect
-            dbCreate: update
-            url: jdbc:h2:mem:devDb
+            driverClassName: org.postgresql.Driver
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            username: root
+            password: root
+            dbCreate: create-drop
+            url: jdbc:postgresql://localhost:5432/dev_db
 
     test:
         dataSource:
@@ -113,10 +115,11 @@ environments:
             username: root
             password: root
             dbCreate: update
-            url: jdbc:postgresql://localhost:5432/test_db
+            url: jdbc:postgresql://localhost:5432/test_db?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
 
     production:
         dataSource:
+            logSql: true
             dbCreate: update
             driverClassName: com.mysql.cj.jdbc.Driver
             username: root

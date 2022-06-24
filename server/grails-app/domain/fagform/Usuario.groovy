@@ -31,5 +31,6 @@ class Usuario implements Serializable {
 
     static mapping = {
         password column: '`password`'
+        id generator: 'identity'
     }
 }
