@@ -101,6 +101,8 @@ dataSource:
 environments:
     development:
         dataSource:
+            logSql: true
+            formatSql: true
             driverClassName: org.postgresql.Driver
             dialect: org.hibernate.dialect.PostgreSQLDialect
             username: root
